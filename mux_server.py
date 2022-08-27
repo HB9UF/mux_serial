@@ -77,7 +77,7 @@ class MuxServer(object):
 			self.tty = serial.Serial(self.device, self.baudrate,
 									self.width, self.parity, self.stopbits,
 									1, self.xon, self.rtc)
-			self.tty.setTimeout(0) # Non-blocking
+			self.tty.timeout = 0 # Non-blocking
 			self.tty.flushInput()
 			self.tty.flushOutput()
 			self.poller.register(self.tty, _READ_ONLY)
