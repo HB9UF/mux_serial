@@ -126,11 +126,11 @@ class MuxServer(object):
 							# Interpret empty result as closed connection
 							else: self.remove_client(s, 'Got no data')
 
-		except serial.SerialException, e:
-			print >>sys.stderr, '\nMUX > Serial error: "%s". Closing...' % e
+		except serial.SerialException as e:
+			print('\nMUX > Serial error: "%s". Closing...' % e, file=sys.stderr)
 
-		except socket.error, e:
-			print >>sys.stderr, '\nMUX > Socket error: %s' % e.strerror
+		except socket.error as e:
+			print('\nMUX > Socket error: %s' % e.strerror, file=sys.stderr)
 
 		except (KeyboardInterrupt, SystemExit):
 			pass
