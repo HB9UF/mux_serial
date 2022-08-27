@@ -2,7 +2,7 @@
 
 import sys
 import socket
-import fdpexpect
+from pexpect import fdpexpect
 import atexit
 
 _default_host = 'localhost'
