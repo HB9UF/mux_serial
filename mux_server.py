@@ -46,17 +46,17 @@ class MuxServer(object):
 		self.clients = []
 
 	def close(self):
-		print >>sys.stderr, '\nMUX > Closing...'
+		print('\nMUX > Closing...', file=sys.stderr)
 
 		for client in self.clients:
 			client.close()
 		self.tty.close()
 		self.server.close()
 
-		print >>sys.stderr, 'MUX > Done! =)'
+		print('MUX > Done! =)', file=sys.stderr)
 
 	def add_client(self, client):
-		print >>sys.stderr, 'MUX > New connection from', client.getpeername()
+		print('MUX > New connection from', client.getpeername(), file=sys.stderr)
 		client.setblocking(0)
 		self.fd_to_socket[client.fileno()] = client
 		self.clients.append(client)
@@ -67,7 +67,7 @@ class MuxServer(object):
 			name = client.getpeername()
 		except:
 			name = 'client %d' % client.fileno()
-		print >>sys.stderr, 'MUX > Closing %s: %s' % (name, why)
+		print('MUX > Closing %s: %s' % (name, why), file=sys.stderr)
 		self.poller.unregister(client)
 		self.clients.remove(client)
 		client.close()
@@ -82,15 +82,15 @@ class MuxServer(object):
 			self.tty.flushOutput()
 			self.poller.register(self.tty, _READ_ONLY)
 			self.fd_to_socket[self.tty.fileno()] = self.tty
-			print >>sys.stderr, 'MUX > Serial port: %s @ %s' % (self.device, self.baudrate)
+			print('MUX > Serial port: %s @ %s' % (self.device, self.baudrate), file=sys.stderr)
 
 			self.server.bind((self.host, self.port))
 			self.server.listen(5)
 			self.poller.register(self.server, _READ_ONLY)
 			self.fd_to_socket[self.server.fileno()] = self.server
-			print >>sys.stderr, 'MUX > Server: %s:%d' % self.server.getsockname()
+			print('MUX > Server: %s:%d' % self.server.getsockname(), file=sys.stderr)
 
-			print >>sys.stderr, 'MUX > Use ctrl+c to stop...\n'
+			print('MUX > Use ctrl+c to stop...\n', file=sys.stderr)
 
 			while True:
 				events = self.poller.poll(500)

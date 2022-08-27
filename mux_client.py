@@ -18,22 +18,22 @@ class MuxClient(object):
 	def run(self):
 		self.sock.connect_ex((self.host, self.port))
 		self.term = fdpexpect.fdspawn(self.sock)
-		print >>sys.stderr, 'MUX > Connected to %s:%d' % (self.host, self.port)
+		print('MUX > Connected to %s:%d' % (self.host, self.port), file=sys.stderr)
 		return self.term
 
 	def interact(self):
-		print >>sys.stderr, 'MUX > Use ctrl+] to stop...\n'
+		print('MUX > Use ctrl+] to stop...\n', file=sys.stderr)
 		self.term.interact()
 
 	def close(self):
-		print >>sys.stderr, '\nMUX > Closing...'
+		print('\nMUX > Closing...', file=sys.stderr)
 
 		if self.term is None:
 			self.sock.close()
 		else:
 			self.term.close() # Closes sock too
 
-		print >>sys.stderr, 'MUX > Done! =)'
+		print('MUX > Done! =)', file=sys.stderr)
 
 
 if __name__ == '__main__':

@@ -37,7 +37,7 @@ def _write_log(x):
 if opts.file:
 	logname = opts.file
 	log	= open(logname, 'w')
-	print >>sys.stderr, 'MUX > Logging output to', logname
+	print('MUX > Logging output to', logname, file=sys.stderr)
 	write = _write_log
 
 else:
@@ -50,9 +50,9 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect(server_address)
 
 
-print >>sys.stderr, 'MUX > Connected to %s:%d' % server_address
-print >>sys.stderr, 'MUX > format: [date time elapsed delta] line'
-print >>sys.stderr, 'MUX > Use ctrl+c to stop...\n'
+print('MUX > Connected to %s:%d' % server_address, file=sys.stderr)
+print('MUX > format: [date time elapsed delta] line', file=sys.stderr)
+print('MUX > Use ctrl+c to stop...\n', file=sys.stderr)
 
 
 # Init line catcher
@@ -102,10 +102,10 @@ while True:
 	except:
 		break
 
-print >>sys.stderr, '\nMUX > Closing...'
+print('\nMUX > Closing...', file=sys.stderr)
 
 s.close()
 if opts.file:
 	log.close()
 
-print >>sys.stderr, 'MUX > Done! =)'
+print('MUX > Done! =)', file=sys.stderr)
