@@ -68,7 +68,11 @@ current_line = ''
 while True:
 	try:
 		# Read 1 char
-		x = s.recv(1)
+		x = str(s.recv(1), 'UTF-8', errors='ignore')
+		# With the default of errors='strict', this fails
+		# on multi-char UTF-8. The fix is not ideal as it
+		# breaks an input stream containing UTF-8 . At
+		# least we get an altered stream instead of a crash...
 
 		# Ignore carriage returns
 		if x == '\r':
